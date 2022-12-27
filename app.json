@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "Snews",
+    "slug": "Snews",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "efca98fb-f66a-4007-aee5-4f9424464123"
+      }
+    }
+  }
+}
