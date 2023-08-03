@@ -1,33 +1,14 @@
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
 import * as React from "react";
 import  {useState} from 'react';
 import { View, Share, Text, Image, StyleSheet, SafeAreaView, Button, TouchableHighlight, ScrollView, TouchableOpacity, Pressable } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { img_url } from './api_url';
-import axios from 'axios';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-export default function TechDetails() {
+export default function CategoryDetails() {
   const route =useRoute();
-  const [estado, setEstado] = useState(false);
-
+  const [estado, setEstado] = useState(route.params.save_status);
   const supportedURL = "http://newsserver.abhiyanta.co/";
-  const saveArticle = async () => {
-    setEstado(!estado);
-
-    axios.post("http://newsserver.abhiyanta.co/api/article_save_store",{ "slug":route.params.slug })
-    .then((responce) => {
-      // toast.success("Inserted successfully",{position:"top-right"});
-     
-      if(responce.data.msg === "Saved"){
-        alert("Saved Sucessfully");
-      }
-      else{
-        alert("Removed Saved");
-      }
-      console.log("Inserted",responce.data.msg);
-      console.log(estado);
-    })
-  };
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -47,6 +28,27 @@ export default function TechDetails() {
       alert(error.message);
     }
   };
+  const saveArticle = async () => {
+    setEstado(!estado);
+    axios.post("http://newsserver.abhiyanta.co/api/article_save_store",{ "slug":route.params.slug , "save_status": estado})
+    .then((responce) => {
+      // toast.success("Inserted successfully",{position:"top-right"});
+      console.log(responce.data);
+      
+      if(estado === "Yes"){
+        setEstado("Yes");
+        alert("Saved Sucessfully");
+      }
+      else{
+        setEstado("No");
+        alert("Removed Saved");
+      }
+      console.log("Inserted",estado);
+      console.log("Ssved  status",responce.data.status);
+      console.log("New Route",route.params.save_status);  
+
+    })
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -60,7 +62,8 @@ export default function TechDetails() {
         <View style={styles.container}>
           <View style={styles.square} >
           <Pressable onPress={() => saveArticle()}>
-          <MaterialCommunityIcons style={styles.image1}  name={estado ? 'bookmark' : 'bookmark-outline'}  size={19}/>
+          <MaterialCommunityIcons style={styles.image1}  name={estado ? 'bookmark-outline' : 'bookmark'}  size={19}/>
+            {/* <Image style={styles.image1} source={require('../assets/Post.png')} /> */}
 
             </Pressable>
           </View>
@@ -72,9 +75,7 @@ export default function TechDetails() {
         
         </View>
         <View leftFlex style={styles.viewHead}>
-          {/* <Text style={styles.leftFlex}> */}
-        <Text style={styles.buttonDesign} >Technologies </Text>
-          {/* </Text> */}
+        <Text style={styles.buttonDesign} >Sports</Text>
           <Text style={styles.rightFlex} >7.29 am</Text>
         </View>
         <View >
@@ -192,7 +193,6 @@ const styles = StyleSheet.create({
     textAlign: "right",
     marginLeft: -10,
     color:"#002880"
-
   },
   image: {
     width: 60,
@@ -217,8 +217,8 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     marginRight: 10,
-    marginLeft: 255,
     marginBottom:10,
+    marginLeft: 255,
     shadowColor: "#000",
     shadowOffset: {
       width: 5,
@@ -343,10 +343,10 @@ const styles = StyleSheet.create({
     paddingBottom:5,
     paddingLeft:15,
     paddingRight:15,
-    borderColor:"#1410CC",
+    borderWidth:1,
   color:"#ffffff",
   justifyContent: 'center',
-  marginLeft:20,
+  marginLeft:10,
   textAlign:'center',
   borderRadius:10
   },

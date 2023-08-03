@@ -1,34 +1,71 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { Image,RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableHighlight, View,ImageBackground} from 'react-native';
+import Card from '../Componants/Card';
 import axios from "axios";
 import { img_url } from './api_url';
-import { useNavigation } from '@react-navigation/native';
-import Card from "../Componants/Card";
+import { useNavigation, useRoute } from '@react-navigation/native';
+import Images from "../Componants/Images";
 
-export default function Fashion() {
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
+export default function CategoryList() {
   const navigation = useNavigation();
-
     const [sportList, setSportList] = useState([]);
-    useEffect(() => {
-        axios
-        .get("http://newsserver.abhiyanta.co/api/categorywise_articles/fashion")
-        .then((response) => {
+    const [error, setError] = useState(null);
+    const route =useRoute();
+    // const cat = route.params.name;
+    console.log("new item",route.params.name);
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      wait(2000).then(() => setRefreshing(false));
+    }, []);
+
+    useEffect(()=>{
+      setRefreshing(true);
+          setTimeout(() => {
+            const baseURL = "http://newsserver.abhiyanta.co/api/categorywise_articles/"
+            axios.get(baseURL+route.params.name)
+            .then((response) => {
+            setRefreshing(false);
             setSportList(response.data.articles);
-            console.log(sportList);
-        });
-    }, [])
+            console.log("new item useEffect",route.params.name);
+            console.log("Response data",response.data);
+                  
+      });
+          }, 0);
+  
+    },[route.params.name]); 
+    if (refreshing) {
+      return (
+          <View style={styles.container}>
+ 
+         <Image  source={Images.Loader} resizeMode="cover"  style={styles.imageloader}></Image>
+          </View>
+      );
+    } else{
     return (
         <>
-      
         <SafeAreaView style={styles.container}>
-          <ScrollView>
-                        <View style={{flex:1}}>
-                            <Text style={styles.trendinghead}> Fashion Categories</Text>
+        <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      >
+                        <View>
+                            <Text style={styles.trendinghead}> {route.params.name} Categories</Text>
                         </View>
+                        
                     {
             sportList.map((item)=>
-            <TouchableHighlight  underlayColor={'transparent'} onPress={()=> navigation.navigate("FashionDetails",item)}>
+            <TouchableHighlight underlayColor={'transparent'} onPress={()=> navigation.navigate("CategoryDetails",item)}>
     <Card>
     <View style={styles.container} >
             <View  style={{ flexDirection:'column'}}>
@@ -39,7 +76,7 @@ export default function Fashion() {
               <View style={styles.container}>
                 
               <Text style={styles.tredingTitle}>
-            {item.title} </Text>     
+            {item.category} </Text>     
           </View>
               <Text style={styles.tredingDate}>
               Tech.15 min ago         
@@ -48,7 +85,7 @@ export default function Fashion() {
           </View>   
     
     </Card>
-     </TouchableHighlight>
+    </TouchableHighlight>
     )
     }
           </ScrollView>
@@ -58,7 +95,20 @@ export default function Fashion() {
           
       );
     }
+  }
     const styles = StyleSheet.create({
+
+      arrow:{
+        color:"gray",
+        marginTop:10,
+        marginLeft:10
+      },
+      backimg:{
+       height:20,
+       width:5,
+       marginLeft:10,
+       marginTop:10
+      },
         header:{
           marginTop:50 , backgroundColor:"#000080", paddingTop:15,paddingBottom:15
         },
@@ -67,7 +117,9 @@ export default function Fashion() {
           justifyContent: "center", // ignore this - we'll come back to it
           flexDirection: "row",
           width:"100%",
+          height:"100%",
           backgroundColor:"#fff"
+          
         },
         container1: {
           flex: 1,
@@ -120,7 +172,6 @@ export default function Fashion() {
            paddingTop:11,
            color:"#979797"
         },
-        
         trendinghead:{
           color:"#ffffff",
           backgroundColor:"#002880",
@@ -254,5 +305,12 @@ export default function Fashion() {
           shadowRadius: 3.84,
           
           elevation: 5,  
+        },
+        imageloader:{
+          width:"100%",
+          height:"30%",
+          margin: 0,
+          position: "absolute",
+          top: "30%",
         },
       });

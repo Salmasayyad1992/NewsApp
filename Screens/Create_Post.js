@@ -1,4 +1,4 @@
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Image, SafeAreaView, ScrollView,ToastAndroid,Pressable, StyleSheet, Text, View, TextInput } from 'react-native';
 import { useState,useRef,useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
@@ -61,9 +61,7 @@ export default function Create_Post() {
          "otherHeader": "foo",
          } , body :body} )
       .then((res) => { 
- 
-        alert("Added Successfully");
-  
+        ToastAndroid.show('Added Successfully', ToastAndroid.SHORT);  
         anotherFunc();
         setRefreshing(false);
         body="";
@@ -85,7 +83,8 @@ const submitForm=(data)=> {
            "otherHeader": "foo",
            } , body :body} )
         .then((res) => { 
-          alert("Added Successfully");
+          ToastAndroid.show('Added Successfully', ToastAndroid.SHORT);  
+
           body="";
           console.log("response" +JSON.stringify(res));
           todoInput.current.clear();
@@ -198,20 +197,20 @@ const submitForm=(data)=> {
                     image  && <Image source={{ uri: image }} style={{ width: 350, height: 200 }} />
                 }
                     <View style={imageUploaderStyles.uploadBtnContainer}>
-                        <TouchableOpacity 
+                    <Pressable 
                              value={image}
                              onChangeText={onChangeImageandler}
                         onPress={addImage} style={imageUploaderStyles.uploadBtn} >
                             <Text>  {image ? 'Edit' : 'Upload'} Image</Text>
                             <AntDesign name="camera" size={20} color="black" />
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
             </View>
         
-          <TouchableOpacity style={styles.buttonLogin} 
+          <Pressable style={styles.buttonLogin} 
            onPress = {uploadImage}>
             <Text style={styles.buttonLoginText}>Submit </Text>
-          </TouchableOpacity>
+          </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
@@ -308,6 +307,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     width:"90%",
     marginLeft:"auto",
+    marginBottom:20,
     marginRight:"auto"
   },
   buttonLoginText: {

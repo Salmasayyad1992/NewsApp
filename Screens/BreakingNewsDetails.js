@@ -6,9 +6,12 @@ import { img_url } from './api_url';
 import  {useState} from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Card from '../Componants/Card';
+import axios from 'axios';
 export default function BreakingNewsDetails() {
   const route =useRoute();
   const [estado, setEstado] = useState(route.params.save_status);
+  const [sportList, setSportList] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
   const supportedURL = "http://news.abhiyanta.co/";
   const onShare = async () => {
     try {
@@ -29,6 +32,21 @@ export default function BreakingNewsDetails() {
       alert(error.message);
     }
   };
+  const saveArticle = async () => {
+    setEstado(!estado);
+    axios.post("http://newsserver.abhiyanta.co/api/article_save_store",{ "article_id":route.params.id,"slug":route.params.slug , "save_status": estado})
+    .then((responce) => {
+      if(estado === true){
+        alert("Saved Sucessfully");
+      }
+      else{
+        alert("Removed Saved");
+      }
+      console.log("Inserted",estado);
+      console.log("Ssved  status",responce.data.status);
+      console.log("Slug",route.params.slug);
+    })
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -43,8 +61,6 @@ export default function BreakingNewsDetails() {
           <View style={styles.square} >
           <Pressable onPress={() => saveArticle()}>
           <MaterialCommunityIcons style={styles.image1}  name={estado ? 'bookmark-outline' : 'bookmark'}  size={19}/>
-            {/* <Image style={styles.image1} source={require('../assets/Post.png')} /> */}
-
             </Pressable>
           </View>
           <View style={styles.square1} >

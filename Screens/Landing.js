@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
     return (
         <View style={styles.container}>
         <ImageBackground source={Images.Onboarding} resizeMode="cover"  style={styles.image}>
-        <Text style={styles.text}>  Welcome to S NEWS </Text>
+        <Text style={styles.text}>  Welcome to B NEWS </Text>
         <Image source={Images.LogoOnboarding} style={styles.logo} />
   
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Login")} >
@@ -90,8 +90,8 @@ import { useNavigation } from "@react-navigation/native";
     },
     logo:{
       justifyContent: "center", 
-      width:149,
-      height:168,
+      width:340,
+      height:218,
       marginLeft:"auto",
       marginRight:"auto",
       marginTop:40,

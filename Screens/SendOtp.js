@@ -44,8 +44,7 @@ export default function OTPScreen() {
            savedCallback.current = callback;
          }, [callback]);
         useEffect(() => {
-          console.log("OTP",route.params.otpNumber)
-          alert("OTP : "+  route.params.otpNumber)
+      
           function tick() {
             savedCallback.current();
           }
@@ -61,11 +60,13 @@ export default function OTPScreen() {
           alert("Please enter valid OTP")
         }
         else{
+     
         axios.post("http://newsserver.abhiyanta.co/api/otp_check",{
           mobile,
           otp
         })
           .then((response)=>{
+           
     console.log("OTP Status",response.data.mobile_user.name);
     const mobile_user = response.data.mobile_user
     if(response.data.status===200 ){

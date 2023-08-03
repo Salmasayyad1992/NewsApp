@@ -35,6 +35,7 @@ export default function LoginScreen() {
           alert("Check Credential");
         }
         else{
+          alert("OTP is : "+ responce.data.otp);
           navigation.navigate("SendOTP",{otpNumber,mobileNumber});
 
         }

@@ -1,14 +1,18 @@
 {
   "expo": {
-    "name": "Snews",
-    "slug": "Snews",
-    "version": "1.0.0",
+    "name": "Bnews",
+    "slug": "Bnews",
+    "version": "1.0.1",
     "assetBundlePatterns": [
       "**/*"
     ],
+    "splash": {
+      "image": "./assets/imgs/bnews-splash.jpg",
+      "backgroundColor": "#FFFFFF"
+    },
     "extra": {
       "eas": {
-        "projectId": "efca98fb-f66a-4007-aee5-4f9424464123"
+        "projectId": "05e76596-1e15-4f83-a03c-71c4ff7b7cad"
       }
     }
   }

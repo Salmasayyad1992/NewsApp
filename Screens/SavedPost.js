@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
 import * as React from "react";
-
 import { Image, SafeAreaView, ScrollView, RefreshControl,StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import {useEffect, useState} from "react";
 import axios from "axios";
@@ -10,8 +9,9 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import Images from "../Componants/Images";
 import { useNavigation } from '@react-navigation/native';
 
-
-
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 export default function SavedPost() {
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
@@ -44,7 +44,12 @@ else{
 
   return (
     <SafeAreaView style={styles.container}>
-    <ScrollView>
+     <ScrollView   refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }>
     <StatusBar style="auto" />
     {/* <View style={styles.container}>
       <Text style={styles.headt}>Categories</Text>
@@ -66,7 +71,7 @@ else{
 />
                     {
             sportList.map((item,index)=>
-            <TouchableHighlight  underlayColor={'transparent'} onPress={()=> navigation.navigate("FashionDetails",item,index)}>
+            <TouchableHighlight  underlayColor={'transparent'} onPress={()=> navigation.navigate("SavePostDetails",item,index)}>
     <Card>
 
     <View style={styles.container} >
@@ -174,6 +179,7 @@ const styles = StyleSheet.create({
   tredingTitle:{
     fontSize:12,
      textAlign:"justify",
+     width:"80%",
      paddingLeft:10,
      paddingRight:10,
      paddingTop:5

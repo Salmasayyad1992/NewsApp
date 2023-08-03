@@ -74,7 +74,7 @@ export default function Category() {
 <View  style={{flex:1, flexDirection:'row',flexWrap:'wrap'}}>
 {
         categoryList.map((item,index)=>
-        <TouchableHighlight  underlayColor={'transparent'} onPress={()=> navigation.navigate("Sports",{"name":item.name,index})}>
+        <TouchableHighlight  underlayColor={'transparent'} onPress={()=> navigation.navigate("CategoryList",{"name":item.name,index})}>
         <View>
         <Image 
              source={{uri: img_url2+item.image}}
@@ -101,9 +101,11 @@ export default function Category() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:"#fff",
     justifyContent: "center", // ignore this - we'll come back to it
     flexDirection: "row",
-    width:"100%"
+    width:"100%",
+    height:"100%",
   },
   containerTop: {
     flex: 1,

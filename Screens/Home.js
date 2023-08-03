@@ -155,7 +155,7 @@ if (refreshing) {
       <View style={styles.container}>
       {
         categoryList.map((item,index)=>
-        <TouchableHighlight  underlayColor={'transparent'} onPress={()=> navigation.navigate("Sports",{"name":item.name,index})}>
+        <TouchableHighlight  underlayColor={'transparent'} onPress={()=> navigation.navigate("CategoryList",{"name":item.name,index})}>
         <View>
         <Image 
              source={{uri: img_url2+item.image}}
@@ -251,6 +251,7 @@ const styles = StyleSheet.create({
     justifyContent: "center", // ignore this - we'll come back to it
     flexDirection: "row",
     width:"100%",
+    height:"100%",
     backgroundColor:"#fff"
   },
   container1: {

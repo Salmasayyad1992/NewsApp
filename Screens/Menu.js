@@ -1,28 +1,18 @@
-import react from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Button, Image, StatusBar, StyleSheet, Text, View } from 'react-native';
+import {  Image, StyleSheet, View } from 'react-native';
 import { useWindowDimensions } from 'react-native';
-import { getHeaderTitle } from '@react-navigation/elements';
 import CustomDrawer from './CustomDrawer';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Home from './Home';
-import Sports from './Sports';
-import Tech from './Tech';
-import Business from './Business';
-import Fashion from './Fashion';
-import Politics from './Politics';
 import Category from './Category';
 import BreakingNewsDetails from './BreakingNewsDetails';
-import BusinessDetails from './businessDetails';
-import PoliticsDetails from './PoliticsDetails';
-import FashionDetails from './FashionDetails';
-import SportsDetails from './SportsDetails';
-import TechDetails from './TechDetails';
 import TredingDetails from './TredingDetails';
+import CategoryDetails from './Category_Details';
 import Create_Post from './Create_Post';
 import LoginScreen from './Login';
 import SavedPost from './SavedPost';
-
+import SavePostDetails from './SavePost_Details';
+import CategoryList from './Category_List';
 
 const CustomIconHome = ({focused, name}) => {
   return <View style={{marginRight: -25}}>
@@ -69,15 +59,15 @@ export default function Menu() {
   return (
     
     <Drawer.Navigator
-    drawerContentOptions={{
-      activeTintColor: 'red',
-      activeBackgroundColor: 'grey',
-      inactiveTintColor: 'blue',
-      inactiveBackgroundColor: 'white',
-      labelStyle:{
-        marginLeft:5
-      }
-    }}
+    // drawerContentOptions={{
+    //   activeTintColor: 'red',
+    //   activeBackgroundColor: 'grey',
+    //   inactiveTintColor: 'blue',
+    //   inactiveBackgroundColor: 'white',
+    //   labelStyle:{
+    //     marginLeft:5
+    //   }
+    // }}
      drawerContent={props => <CustomDrawer {... props}/>}
      drawerStyle={{
       backgroundColor: "green",
@@ -129,88 +119,7 @@ export default function Menu() {
           headerTintColor: '#000000',
         }}
       component={Create_Post}/>
-      <Drawer.Screen name="Sports"  
-                  options={{
-                    drawerLabel: () => null,
-                    title: "News Categories",
-                    drawerIcon: () => null,
-                    drawerItemStyle: { height: 0 ,display:'none' },
-                    headerStyle: {
-                      shadowOpacity: 0.86,
-                      elevation: 8,
-                      backgroundColor: 'white',
-                      shadowColor: 'black',
-                    },
-                    headerTintColor: '#000000',
-                  }}
-      component={Sports} />
-      <Drawer.Screen name="Tech"  
-          options={{
-            drawerLabel: () => null,
-            title: undefined,
-            drawerIcon: () => null,
-            drawerItemStyle: { height: 0 ,display:'none' },
-            headerStyle: {
-              shadowOpacity: 0.86,
-              elevation: 8,
-              backgroundColor: 'white',
-              shadowColor: 'black',
-  
-            },
-            headerTintColor: '#000000',
-          }}
-      component={Tech} />
-     <Drawer.Screen name="Business"  
-                  
-                  options={{
-                    drawerLabel: () => null,
-                    title: undefined,
-                    drawerIcon: () => null,
-                    drawerItemStyle: { height: 0 ,display:'none' },
-                    headerStyle: {
-                      shadowOpacity: 0.86,
-                      elevation: 8,
-                      backgroundColor: 'white',
-                      shadowColor: 'black',
-          
-                    },
-                    headerTintColor: '#000000',
-                  }}
-      component={Business} />
-      <Drawer.Screen name="Fashion"  
-                  
-                  options={{
-                    drawerLabel: () => null,
-                    title: undefined,
-                    drawerIcon: () => null,
-                    drawerItemStyle: { height: 0 ,display:'none' },
-                    headerStyle: {
-                      shadowOpacity: 0.86,
-                      elevation: 8,
-                      backgroundColor: 'white',
-                      shadowColor: 'black',
-          
-                    },
-                    headerTintColor: '#000000',
-                  }}
-      component={Fashion} />
-      <Drawer.Screen name="Politics"  
-                  
-                  options={{
-                    drawerLabel: () => null,
-                    title: undefined,
-                    drawerIcon: () => null,
-                    drawerItemStyle: { height: 0 ,display:'none' },
-                    headerStyle: {
-                      shadowOpacity: 0.86,
-                      elevation: 8,
-                      backgroundColor: 'white',
-                      shadowColor: 'black',
-          
-                    },
-                    headerTintColor: '#000000',
-                  }}
-      component={Politics} />
+
       <Drawer.Screen name="Categories"
         options={{
           headerStyle: {
@@ -252,39 +161,9 @@ export default function Menu() {
             headerTintColor: '#000000',
           }}
         component={BreakingNewsDetails} /> 
-            <Drawer.Screen name="BusinessDetails"  
-          options={{
-            drawerLabel: () => null,
-            title: undefined,
-            drawerIcon: () => null,
-            drawerItemStyle: { height: 0 ,display:'none' },
-            headerStyle: {
-              shadowOpacity: 0.86,
-              elevation: 8,
-              backgroundColor: 'white',
-              shadowColor: 'black',
   
-            },
-            headerTintColor: '#000000',
-          }}
-        component={BusinessDetails} />  
-         <Drawer.Screen name="PoliticsDetails"  
-          options={{
-            drawerLabel: () => null,
-            title: undefined,
-            drawerIcon: () => null,
-            drawerItemStyle: { height: 0 ,display:'none' },
-            headerStyle: {
-              shadowOpacity: 0.86,
-              elevation: 8,
-              backgroundColor: 'white',
-              shadowColor: 'black',
-  
-            },
-            headerTintColor: '#000000',
-          }}
-        component={PoliticsDetails} />
-             <Drawer.Screen name="FashionDetails"  
+        
+             <Drawer.Screen name="SavePostDetails"  
           options={{
             drawerLabel: () => null,
             title: "Saved Post",
@@ -299,8 +178,24 @@ export default function Menu() {
             },
             headerTintColor: '#000000',
           }}
-        component={FashionDetails} />
-             <Drawer.Screen name="SportsDetails"  
+        component={SavePostDetails} />
+                  <Drawer.Screen name="CategoryList"  
+          options={{
+            drawerLabel: () => null,
+            title: "Categories",
+            drawerIcon: () => null,
+            drawerItemStyle: { height: 0 ,display:'none' },
+            headerStyle: {
+              shadowOpacity: 0.86,
+              elevation: 8,
+              backgroundColor: 'white',
+              shadowColor: 'black',
+  
+            },
+            headerTintColor: '#000000',
+          }}
+        component={CategoryList} />
+             <Drawer.Screen name="CategoryDetails"  
           options={{
             drawerLabel: () => null,
             title: "Categories news",
@@ -315,23 +210,8 @@ export default function Menu() {
             },
             headerTintColor: '#000000',
           }}
-        component={SportsDetails} />
-           <Drawer.Screen name="TechDetails"  
-          options={{
-            drawerLabel: () => null,
-            title: undefined,
-            drawerIcon: () => null,
-            drawerItemStyle: { height: 0 ,display:'none' },
-            headerStyle: {
-              shadowOpacity: 0.86,
-              elevation: 8,
-              backgroundColor: 'white',
-              shadowColor: 'black',
-  
-            },
-            headerTintColor: '#000000',
-          }}
-        component={TechDetails} />
+        component={CategoryDetails} />
+          
                <Drawer.Screen name="TredingDetails"  
           options={{
             drawerLabel: () => null,
